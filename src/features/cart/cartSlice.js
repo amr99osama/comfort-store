@@ -50,6 +50,7 @@ const cartSlice = createSlice({
             state.numItemsInCart += amount - item.amount;
             state.cartTotal += item.price * (amount - item.amount)
             item.amount = amount;
+            cartSlice.caseReducers.calculateTotals(state);
         },
         calculateTotals: (state) => {
             state.tax = 0.1 * state.cartTotal;

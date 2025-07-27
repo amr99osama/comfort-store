@@ -35,10 +35,8 @@ const SingleProducts = () => {
   };
 
   const dispatch = useDispatch();
-  console.log(dispatch);
   const addToCart = () => {
     dispatch(addItem({ product: cartProduct }));
-    console.log("Dispatching toast..."); // Check if this logs
   };
 
   return (
