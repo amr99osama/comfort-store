@@ -3,7 +3,6 @@ import { Filters } from '../components';
 import { ProductsContainer } from '../components';
 import { PaginationContainer } from '../components';
 import { customFetch } from '../utils';
-
 const url = '/products';
 export const loader = async ({ request }) => {
   const params = Object.fromEntries([...new URL(request.url).searchParams.entries(),]);

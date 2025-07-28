@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
-
+import toast from "react-hot-toast";
 const themes = {
     winter: 'winter',
     dracula: 'dracula'
 };
+
+const getUserFromLocalStorage = () => {
+
+    return JSON.parse(localStorage.getItem('user')) || null;
+}
 
 const getThemeFromLocalStorage = () => {
     const theme = localStorage.getItem('theme') || themes.winter;
@@ -14,9 +18,7 @@ const getThemeFromLocalStorage = () => {
 }
 
 const initialState = {
-    user: {
-        username: "Amr19",
-    },
+    user: getUserFromLocalStorage(),
     theme: getThemeFromLocalStorage()
 }
 const userSlice = createSlice({
@@ -24,12 +26,15 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         loginUser: (state, action) => {
-            console.log('login')
+            const user = { ...action.payload, token: action.payload.jwt };
+            state.user = user;
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log(action.payload)
         },
         logOut: (state) => {
             state.user = null;
             localStorage.removeItem('user');
-            // toast.success('Logout Successfully !')
+            toast.success('Logout Successfully !')
         },
         toggleTheme: (state) => {
             const { dracula, winter } = themes;

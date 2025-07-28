@@ -2,12 +2,19 @@ import React from 'react'
 import { About, Cart, Checkout, Error, HomeLayout, Landing, Products, SingleProducts, Login, Register, Orders } from './pages'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { ErrorElement } from './components';
-import { ToastContainer } from 'react-toastify'
-
 /// loaders
 import { loader as landingLoader } from './pages/Landing'
 import { loader as singleProductLoader } from './pages/SingleProducts'
 import { loader as productsLoader } from './pages/Products';
+
+/// actions
+import { action as registerAction } from './pages/Register'
+import { action as loginAction } from './pages/Login'
+
+
+// store
+import { store } from './store'
+
 
 // this is the router for the app
 const router = createBrowserRouter([
@@ -60,31 +67,21 @@ const router = createBrowserRouter([
     path: '/login',
     element: <Login />,
     errorElement: <Error />,
+    action: loginAction(store), // this is the action for the register page
+
   },
   {
     path: '/register',
     element: <Register />,
     errorElement: <Error />,
+    action: registerAction, // this is the action for the register page
   }
 ]);
 
 const App = () => {
   return (
-    <>
-      <RouterProvider router={router} />
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-    </>
+    <RouterProvider router={router} />
+
   )
 }
 

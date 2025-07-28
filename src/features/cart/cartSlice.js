@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-// import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
+
 const defaultState = {
     cartItems: [],
     numItemsInCart: 0,
@@ -29,12 +30,14 @@ const cartSlice = createSlice({
             }
             state.numItemsInCart += product.amount;
             state.cartTotal += product.price * product.amount;
-            // toast.success('Item added to cart');
             cartSlice.caseReducers.calculateTotals(state);
+            toast.success('Item added successfully !')
+
         },
         clearCart: (state) => {
             localStorage.setItem('cart', JSON.stringify(defaultState));
             return defaultState;
+
         },
         removeItem: (state, action) => {
             const { cartID } = action.payload;
@@ -43,6 +46,7 @@ const cartSlice = createSlice({
             state.numItemsInCart -= product.amount;
             state.cartTotal -= product.price * product.amount;
             cartSlice.caseReducers.calculateTotals(state);
+            toast.success('Item removed successfully !')
         },
         editItem: (state, action) => {
             const { cartID, amount } = action.payload;
@@ -51,6 +55,8 @@ const cartSlice = createSlice({
             state.cartTotal += item.price * (amount - item.amount)
             item.amount = amount;
             cartSlice.caseReducers.calculateTotals(state);
+            toast.success('Item Updated successfully !')
+
         },
         calculateTotals: (state) => {
             state.tax = 0.1 * state.cartTotal;
