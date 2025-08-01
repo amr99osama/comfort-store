@@ -2,7 +2,7 @@ import React from 'react'
 
 const FormsInput = ({ label, name, type, defaultValue, size }) => {
     return (
-        <div className="form-control">
+        <div className="form-control flex flex-col gap-y-4">
             <label htmlFor={name} className="label">
                 <span className="label-text capitalize">{label}</span>
             </label>
@@ -10,7 +10,7 @@ const FormsInput = ({ label, name, type, defaultValue, size }) => {
                 type={type}
                 name={name}
                 defaultValue={defaultValue}
-                className={`input input-bordered ${size}`}
+                className={`input w-100 input-bordered ${size}`}
             />
         </div>
     )

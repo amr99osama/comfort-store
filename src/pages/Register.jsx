@@ -19,7 +19,6 @@ export const action = async ({ request }) => {
     toast.error(errorMessage);
     console.log(error);
     return null;
-
   }
 }
 const Register = () => {

@@ -15,7 +15,7 @@ const HomeLayout = () => {
 
       <div className='container mx-auto'>
         <footer className='bg-gray-800 text-white p-4'>
-          <p>Copyright &copy; 2025 E-Commerce</p>
+          <p>Copyright &copy; 2025 - AO</p>
         </footer>
       </div>
     </>
