@@ -3,15 +3,18 @@ import Navbar from "./Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../features/User/userSlice";
 import { clearCart } from "../features/Cart/cartSlice";
+import { useQueryClient } from '@tanstack/react-query';
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const queryClient = useQueryClient();
     const user = useSelector((state) => state.userState.user);
 
-    const handleLogout = () => {
-        navigate("/");
-        dispatch(clearCart());
+    const handleLogout = async () => {
+        navigate('/');
         dispatch(logOut());
+        dispatch(clearCart());
+        queryClient.removeQueries();
     };
 
     return (

@@ -16,8 +16,18 @@ import { action as loginAction } from './pages/Login'
 // store
 import { store } from './store'
 
-
+/// react query for fetching data 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    },
+  },
+});
 // this is the router for the app
+
 const router = createBrowserRouter([
   {
     // this is the home page
@@ -32,25 +42,25 @@ const router = createBrowserRouter([
         index: true,
         element: <Landing />,
         errorElement: <ErrorElement />,
-        loader: landingLoader, // this is the loader for the landing page
+        loader: landingLoader(queryClient), // this is the loader for the landing page
       },
       {
         path: 'products',
         element: <Products />,
         errorElement: <ErrorElement />,
-        loader: productsLoader, // this is the loader for the products page
+        loader: productsLoader(queryClient), // this is the loader for the products page
       },
       {
         path: 'products/:id',
         element: <SingleProducts />,
         errorElement: <ErrorElement />,
-        loader: singleProductLoader, // this is the loader for the landing page
+        loader: singleProductLoader(queryClient), // this is the loader for the landing page
       },
       {
         path: 'checkout',
         element: <Checkout />,
         loader: checkoutLoader(store), // this is the loader for the checkout page
-        action: checkoutAction(store), // this is the action for the checkout page
+        action: checkoutAction(store, queryClient), // this is the action for the checkout page
       },
       {
         path: 'cart',
@@ -63,7 +73,7 @@ const router = createBrowserRouter([
       {
         path: 'orders',
         element: <Orders />,
-        loader: ordersLoader(store), // this is the loader for the orders page
+        loader: ordersLoader(store, queryClient), // this is the loader for the orders page
       },
     ]
   },
@@ -84,8 +94,10 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <RouterProvider router={router} />
-
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+    </QueryClientProvider>
   )
 }
 

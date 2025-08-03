@@ -5,11 +5,13 @@ import SubmitBtn from './SubmitBtn'
 import { customFetch, formatPrice } from '../utils'
 import toast from 'react-hot-toast'
 import { clearCart } from '../features/cart/cartSlice'
+import { QueryClient } from '@tanstack/react-query'
 // action used to handle POST Requests or Form Submissions
 // loaders are used to handle GET Requests and fetch data before rendering the component
 
 
-export const action = (store) => async ({ request }) => {
+
+export const action = (store, queryClient) => async ({ request }) => {
     const formData = await request.formData();
     const { name, address } = Object.fromEntries(formData);
     const user = store.getState().userState.user;
@@ -30,6 +32,8 @@ export const action = (store) => async ({ request }) => {
             }
         );
         console.log(response.data);
+        // clear the query cache for products to ensure the cart is updated
+        queryClient.removeQueries({ queryKey: ['orders'] });
         // clear the cart after placing the order
         store.dispatch(clearCart());
         // show success message
