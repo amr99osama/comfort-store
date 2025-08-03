@@ -16,8 +16,8 @@ const NavLinks = () => {
             {
                 links.map((link) => {
                     const { id, url, text } = link;
-                    if (url === 'orders' || url === 'checkout' && !user) {
-                        return null; // Skip rendering if user is not logged in
+                    if ((url === 'orders' || url === 'checkout') && !user) {
+                        return null;
                     }
                     return (
                         <li key={id}>
