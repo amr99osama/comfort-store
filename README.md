@@ -1,5 +1,7 @@
 # Comfort Store - E-commerce App
 
+_Live Demo: [Comfort Store](https://comfort-ecomm.netlify.app/)_
+
 ## 📌 Overview
 
 A full-featured e-commerce platform with modern React architecture, featuring:
